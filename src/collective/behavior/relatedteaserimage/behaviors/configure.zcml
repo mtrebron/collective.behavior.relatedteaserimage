@@ -1,0 +1,35 @@
+<configure
+  xmlns="http://namespaces.zope.org/zope"
+  xmlns:browser="http://namespaces.zope.org/browser"
+  xmlns:plone="http://namespaces.plone.org/plone"
+  xmlns:zcml="http://namespaces.zope.org/zcml"
+  i18n_domain="plone">
+
+    <include package="plone.behavior" file="meta.zcml"/>
+
+    <!-- -*- extra stuff goes here -*- -->
+
+    <plone:behavior
+        title="Related Teaser Image Behavior"
+        description="A related image field which displays like a leadimage"
+        name="collective.behavior.relatedteaserimage"
+        provides=".relatedteaserimage.IRelatedTeaserImageBehavior"
+        factory=".relatedteaserimage.RelatedTeaserImage"
+        marker=".relatedteaserimage.IRelatedTeaserImageMarker"
+        for="plone.dexterity.interfaces.IDexterityContent"
+        />
+
+  <subscriber
+      for=".relatedteaserimage.IRelatedTeaserImageMarker
+           zope.lifecycleevent.interfaces.IObjectAddedEvent"
+      handler=".relatedteaserimage.addILeadImageInterface"
+  />
+
+  <subscriber
+      for=".relatedteaserimage.IRelatedTeaserImageMarker
+           zope.lifecycleevent.interfaces.IObjectModifiedEvent"
+      handler=".relatedteaserimage.addILeadImageInterface"
+  />
+
+
+</configure>

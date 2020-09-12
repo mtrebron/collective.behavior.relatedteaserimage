@@ -1,0 +1,31 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="collective.behavior.relatedteaserimage">
+
+  <!-- Set overrides folder for Just-a-Bunch-Of-Templates product -->
+  <include package="z3c.jbot" file="meta.zcml" />
+  <browser:jbot
+      directory="overrides"
+      layer="collective.behavior.relatedteaserimage.interfaces.ICollectiveBehaviorRelatedteaserimageLayer"
+      />
+
+  <!-- Publish static files -->
+  <plone:static
+      name="collective.behavior.relatedteaserimage"
+      type="plone"
+      directory="static"
+      />
+
+  <browser:viewlet
+    name="collective.behavior.relatedteaserimage.viewlet_related_teaser_image"
+    for="plone.dexterity.interfaces.IDexterityContent"
+    layer="..interfaces.ICollectiveBehaviorRelatedteaserimageLayer"
+    class=".viewlets.RelatedTeaserImageViewlet"
+    manager="plone.app.layout.viewlets.interfaces.IAboveContentTitle"
+    permission="zope2.View"
+    template="templates/viewlet_related_teaser_image.pt"
+    />
+
+</configure>
