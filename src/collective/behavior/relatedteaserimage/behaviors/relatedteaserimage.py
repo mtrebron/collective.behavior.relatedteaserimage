@@ -37,8 +37,8 @@ class IRelatedTeaserImageMarker(Interface):
 class IRelatedTeaserImageBehavior(model.Schema):
 
     related_image = RelationChoice(
-        title=u"Related Teaser Image",
-        description=u"Add a teaser image",
+        title=_(u"Related Teaser Image"),
+        description=_(u"Add a teaser image"),
         required=False,
         default=None,
         vocabulary='plone.app.vocabularies.Catalog'
@@ -105,10 +105,11 @@ class RelatedTeaserImage(object):
 
 
 def addILeadImageInterface(context, event):
-    context = context.aq_explicit
-    has_image = getattr(context, 'related_image', False)
+    context = getattr(context, 'aq_explicit', None)
 
-    if has_image and not ILeadImage.providedBy(context):
-        alsoProvides(context, ILeadImage)
-    elif not has_image:
-        noLongerProvides(context, ILeadImage)
+    if context:
+        has_image = getattr(context, 'related_image', False)
+        if has_image and not ILeadImage.providedBy(context):
+            alsoProvides(context, ILeadImage)
+        elif not has_image:
+            noLongerProvides(context, ILeadImage)

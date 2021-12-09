@@ -25,8 +25,18 @@ def default_pattern_options(context=None):
         request = getRequest()
         context = request.PARENTS[0]
 
-    language = ILanguage(context).get_language()
-
+    #log.info(context)
+    try:
+        language = ILanguage(context).get_language()
+    except TypeError:
+        # FIX ME!
+        # deal with <TypeSchemaContext at Collection>
+        # when editing content type ttw
+        # by checking if it is dexteritycontent
+        # we do a similar thing in mdb_theme
+        language = 'de'
+        pass
+        
     # this should return the portal if plone.app.multilingual is not installed
     language_root = portal.get(language, portal)
 
@@ -62,8 +72,18 @@ def default_base_path(context=None):
         request = getRequest()
         context = request.PARENTS[0]
 
-    language = ILanguage(context).get_language()
-
+    log.info(context)
+    try:
+        language = ILanguage(context).get_language()
+    except TypeError:
+        # FIX ME!
+        # deal with <TypeSchemaContext at Collection> 
+        # when editing content type ttw
+        # by checking if it is dexteritycontent
+        # we do a similar thing in mdb_theme
+        language = 'de'
+        pass
+        
     # this should return the portal if plone.app.multilingual is not installed
     language_root = portal.get(language, portal)
 
